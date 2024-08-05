@@ -10,6 +10,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 red = (255, 0, 0)
 green = (0, 255, 0)
+blue = (0, 0, 255)
 
 # Display settings
 dis_width = 800
@@ -23,10 +24,19 @@ snake_block = 10
 snake_speed = 15
 
 font_style = pygame.font.SysFont(None, 50)
+score_font = pygame.font.SysFont(None, 35)
+
+def score_display(score):
+    value = score_font.render("Your Score: " + str(score), True, white)
+    dis.blit(value, [0, 0])
 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 6, dis_height / 3])
+
+def draw_snake(snake_block, snake_List):
+    for x in snake_List:
+        pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
 
 def gameLoop():
     game_over = False
@@ -93,8 +103,8 @@ def gameLoop():
             if x == snake_Head:
                 game_close = True
 
-        for x in snake_List:
-            pygame.draw.rect(dis, white, [x[0], x[1], snake_block, snake_block])
+        draw_snake(snake_block, snake_List)
+        score_display(Length_of_snake - 1)
 
         pygame.display.update()
 
